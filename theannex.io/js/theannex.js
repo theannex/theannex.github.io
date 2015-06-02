@@ -28,7 +28,7 @@ TheAnnex.Carousel.prototype = {
     var $ = jQuery;
     setTimeout(function() {
       console.log($(opts.selector));
-    }, 100);
+    }, 1000);
   }
 
 }
