@@ -1,4 +1,4 @@
-TheAnnex = TheAnnex || {};
+window.TheAnnex = window.TheAnnex || {};
 
 var images = [
     ["550b7215e4b0ff038e4495dc/t/551ad267e4b0453e4dfd043f/1427821161513/87f25d87b603af68c37c3689cd76760a.jpg", 1.32],
