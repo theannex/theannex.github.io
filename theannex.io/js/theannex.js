@@ -14,7 +14,7 @@ window.TheAnnex = {
     });
 
     $('body').append($img);
-  }
+  },
 
   Carousel: function(opts) {
     this.init(opts);
