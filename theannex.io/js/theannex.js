@@ -25,7 +25,7 @@ window.TheAnnex = {
 TheAnnex.Carousel.prototype = {
 
   init: function(opts) {
-    alert('hello carousel');
+    console.log(jQuery(opts.selector));
   }
 
 }
