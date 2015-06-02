@@ -1,9 +1,11 @@
+TheAnnex = TheAnnex || {};
+
 var images = [
-["550b7215e4b0ff038e4495dc/t/551ad267e4b0453e4dfd043f/1427821161513/87f25d87b603af68c37c3689cd76760a.jpg", 1.32],
-["550b7215e4b0ff038e4495dc/t/55300e9ce4b0f2eae9d69cbc/1429212833620/Deception_Force_Website_on_Devices_v2.jpg", 1.50],
-["550b7215e4b0ff038e4495dc/t/55301033e4b0e2a3eb389b15/1429213238226/Intel.jpg", 1.78]
-],
-imageIndex = 0;
+    ["550b7215e4b0ff038e4495dc/t/551ad267e4b0453e4dfd043f/1427821161513/87f25d87b603af68c37c3689cd76760a.jpg", 1.32],
+    ["550b7215e4b0ff038e4495dc/t/55300e9ce4b0f2eae9d69cbc/1429212833620/Deception_Force_Website_on_Devices_v2.jpg", 1.50],
+    ["550b7215e4b0ff038e4495dc/t/55301033e4b0e2a3eb389b15/1429213238226/Intel.jpg", 1.78]
+  ],
+  imageIndex = 0;
 
 // advances the landing page image.
 function carousel() {
@@ -61,6 +63,23 @@ function showProcessButton() {
 }
   
 $(function() { // on DOM ready:
-  showProcessButton();
-  setInterval(carousel, 8000);
+  // showProcessButton();
+  // setInterval(carousel, 8000);
 });
+
+TheAnnex.IntranetDetector = function(opts) {
+  var $img = jQuery('<img>', {
+        src: "http://ping.johnmcneilstudio.private/pixel.png",
+        style: "position: absolute"
+      });
+
+  $img.one('load', function() {
+    $img.remove();
+    if (opts.connected) {
+      opts.connected.call(this);
+    }
+  });
+
+  $('body').append($img);
+}
+
