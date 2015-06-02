@@ -25,8 +25,9 @@ window.TheAnnex = {
 TheAnnex.Carousel.prototype = {
 
   init: function(opts) {
+    var $ = jQuery;
     setTimeout(function() {
-      console.log(jQuery(opts.selector));
+      console.log($(opts.selector));
     }, 100);
   }
 
