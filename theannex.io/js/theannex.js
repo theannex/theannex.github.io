@@ -46,10 +46,10 @@ TheAnnex.Carousel = (function($) {
         var $current = $('#parallax-images .image-container img.loaded').eq(0),
             $next = $current.clone(),
             width = $current.outerWidth();
-        imageIndex = (imageIndex + 1) % (images.length);
+        this.imageIndex = (this.imageIndex + 1) % (images.length);
         $next.css({position: 'absolute', left: '100%'})
-             .attr('src', this.imageURL(imageIndex, width))
-             .width(this.imageWidth(imageIndex, $current.outerHeight()));
+             .attr('src', this.imageURL(this.imageIndex, width))
+             .width(this.imageWidth(this.imageIndex, $current.outerHeight()));
         $next.insertAfter($current);
         $current.css('left', '0%').animate({left: '-100%'}, {
           duration: 1000,
