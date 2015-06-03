@@ -28,7 +28,7 @@ TheAnnex.Carousel = (function($) {
     var def = function(opts) {
       this.selector = opts.selector;
       this.images = opts.images;
-      this.interval = opts.interval || 10000;
+      this.interval = opts.interval || 7000;
       this.imageIndex = 0;
       this.init();
     };
@@ -71,8 +71,9 @@ TheAnnex.Carousel = (function($) {
       },
 
       imageWidth: function(index, height) {
-        return height;
-        // return height * this.images[index][1];
+        var image = this.images[index],
+            size = image.size;
+        return height * size.width / size.height;
       }
 
     };
