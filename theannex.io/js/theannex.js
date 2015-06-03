@@ -7,8 +7,9 @@ window.TheAnnex = window.TheAnnex || {};
 TheAnnex.IntranetDetector = function(opts) {
 
   // attempt to load an IMG since it is possible to load an HTTP IMG inside an HTTPS site
+  // (cache-buster query string is appended to IMG URL)
   jQuery('<img>', {
-    src: "http://ping.johnmcneilstudio.private/pixel.png", // internal-only URL
+    src: "http://ping.johnmcneilstudio.private/pixel.png?" + (Math.random() + 1).toString(36).substring(7),
     style: "position: absolute"
   })
   .one('load', function() {
@@ -17,7 +18,7 @@ TheAnnex.IntranetDetector = function(opts) {
       opts.connected();    // callback on success
     }
   })
-  .append($img);
+  .appendTo('body'); // kick it off
 
 };
 
