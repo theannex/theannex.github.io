@@ -44,7 +44,8 @@ TheAnnex.Carousel = (function($) {
       },
 
       advance: function() {
-        var $current = $('#parallax-images .image-container img.loaded').eq(0),
+        var self = this,
+            $current = $(this.selector).eq(0),
             $next = $current.clone(),
             width = $current.outerWidth();
         this.imageIndex = (this.imageIndex + 1) % (this.images.length);
@@ -55,15 +56,19 @@ TheAnnex.Carousel = (function($) {
         $current.css('left', '0%').animate({left: '-100%'}, {
           duration: 1000,
           progress: function() {
-            // duplicate transform so both scroll together
-            $next.css({transform: $current.css('transform')});
+            self.synchronizeVScroll($current, $next);
           },
           complete: function() {
-          $next.css({position: 'relative', left: 0});
+            self.synchronizeVScroll($current, $next);
+            $next.css({position: 'relative', left: 0});
             $current.remove();
           }
         });
         $next.animate({left: '0%'}, 1000);
+      },
+
+      synchronizeVScroll: function($master, $slave) {
+        $slave.css({transform: $master.css('transform')});
       },
 
       imageURL: function(index, width) {
