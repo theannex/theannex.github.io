@@ -47,14 +47,19 @@ TheAnnex.Carousel = (function($) {
       advance: function() {
         var self = this,
             $current = $(this.selector).eq(0),
-            $next = $current.clone(),
             containerWidth = $current.parent().width(),
-            containerHeight = $current.parent().height();
+            containerHeight = $current.parent().height(),
+            $next,
+            imageInfo;
+
         this.imageIndex = (this.imageIndex + 1) % (this.images.length);
+        imageInfo = this.images[this.imageIndex];
+        $next = $nextImage(imageInfo, $current, containerWidth, containerHeight);
+        
         $next.css({position: 'absolute', left: '100%'})
-             .attr('src', this.imageURL(this.imageIndex, containerWidth))
-             .width(this.imageWidth(this.imageIndex, containerHeight));
-        $next.insertAfter($current);
+             .insertAfter($current)
+             .animate({left: '0%'}, 1000);
+
         $current.css('left', '0%').animate({left: '-100%'}, {
           duration: 1000,
           progress: function() {
@@ -66,11 +71,18 @@ TheAnnex.Carousel = (function($) {
             $current.remove();
           }
         });
-        $next.animate({left: '0%'}, 1000);
+
       },
 
       synchronizeVScroll: function($master, $slave) {
         $slave.css({transform: $master.css('transform')});
+      },
+
+      $nextImage: function(imageInfo, $current, containerWidth, containerHeight) {
+        var $next = $current.clone();
+        $next.attr('src', this.imageURL(this.imageIndex, containerWidth))
+             .width(this.imageWidth(this.imageIndex, containerHeight));
+        return $next;
       },
 
       imageURL: function(index, containerWidth) {
