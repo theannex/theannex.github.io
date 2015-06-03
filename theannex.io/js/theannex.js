@@ -1,10 +1,10 @@
 window.TheAnnex = {
 
-  ready: function(callback) {
-    jQuery(function() {
-      callback.call(this);
-    }
-  },
+  // ready: function(callback) {
+  //   jQuery(function() {
+  //     callback.call(this);
+  //   });
+  // },
   
   IntranetDetector: function(opts) {
     var $img = jQuery('<img>', {
