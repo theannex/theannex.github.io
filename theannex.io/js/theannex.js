@@ -1,40 +1,53 @@
-window.TheAnnex = {
 
-  // ready: function(callback) {
-  //   jQuery(function() {
-  //     callback.call(this);
-  //   });
-  // },
+window.TheAnnex = window.TheAnnex || {};
+
+////////////////////////////////////////
   
-  IntranetDetector: function(opts) {
-    var $img = jQuery('<img>', {
-          src: "http://ping.johnmcneilstudio.private/pixel.png",
-          style: "position: absolute"
-        });
+TheAnnex.IntranetDetector = function(opts) {
+  
+  var $img = jQuery('<img>', {
+        src: "http://ping.johnmcneilstudio.private/pixel.png",
+        style: "position: absolute"
+      });
 
-    $img.one('load', function() {
-      $img.remove();
-      if (opts.connected) {
-        opts.connected.call(this);
+  $img.one('load', function() {
+    $img.remove();
+    if (opts.connected) { 
+      opts.connected();
+    }
+  });
+
+  $('body').append($img);
+
+};
+
+////////////////////////////////////////
+
+TheAnnex.Carousel = (function($) {
+  
+    var def = function(opts) {
+      this.selector = opts.selector;
+      this.images = opts.images;
+      this.interval = opts.interval || 10000;
+      this.imageIndex = 0;
+      this.init();
+    };
+
+    def.prototype = {
+
+      init: function() {
+        var self = this;
+        setInterval(function() {
+          self.advance();
+        })
+      },
+
+      advance: function() {
+        console.log('ADVANCE!');
       }
-    });
 
-    $('body').append($img);
-  },
+    };
 
-  Carousel: function(opts) {
-    this.init(opts);
-  }
+    return def;
+})(jQuery);
 
-};
-
-TheAnnex.Carousel.prototype = {
-
-  init: function(opts) {
-    var $ = jQuery;
-    setTimeout(function() {
-      console.log($(opts.selector));
-    }, 1000);
-  }
-
-};
