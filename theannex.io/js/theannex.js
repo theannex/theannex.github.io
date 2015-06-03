@@ -1,4 +1,10 @@
 window.TheAnnex = {
+
+  ready: function(callback) {
+    jQuery(function() {
+      callback.call(this);
+    }
+  },
   
   IntranetDetector: function(opts) {
     var $img = jQuery('<img>', {
@@ -20,7 +26,7 @@ window.TheAnnex = {
     this.init(opts);
   }
 
-}
+};
 
 TheAnnex.Carousel.prototype = {
 
@@ -31,4 +37,4 @@ TheAnnex.Carousel.prototype = {
     }, 1000);
   }
 
-}
+};
