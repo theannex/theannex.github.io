@@ -46,7 +46,7 @@ TheAnnex.Carousel = (function($) {
         var $current = $('#parallax-images .image-container img.loaded').eq(0),
             $next = $current.clone(),
             width = $current.outerWidth();
-        this.imageIndex = (this.imageIndex + 1) % (images.length);
+        this.imageIndex = (this.imageIndex + 1) % (this.images.length);
         $next.css({position: 'absolute', left: '100%'})
              .attr('src', this.imageURL(this.imageIndex, width))
              .width(this.imageWidth(this.imageIndex, $current.outerHeight()));
@@ -67,12 +67,12 @@ TheAnnex.Carousel = (function($) {
 
       imageURL: function(index, width) {
         var query = (width >= 750) ? '?format=2500w' : '?format=1500w&storage=local';
-        return 'https://static1.squarespace.com/static/' + images[index].file + query;
+        return 'https://static1.squarespace.com/static/' + this.images[index].file + query;
       },
 
       imageWidth: function(index, height) {
         return height;
-        // return height * images[index][1];
+        // return height * this.images[index][1];
       }
 
     };
