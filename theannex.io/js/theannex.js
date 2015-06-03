@@ -31,6 +31,7 @@ TheAnnex.Carousel = (function($) {
       this.baseURL = opts.baseURL || '';
       this.images = opts.images;
       this.interval = opts.interval || 7000;
+      this.duration = opts.duration || 1000;
       this.imageIndex = 0;
       this.init();
     };
@@ -45,33 +46,41 @@ TheAnnex.Carousel = (function($) {
       },
 
       advance: function() {
-        var self = this,
-            $current = $(this.selector).eq(0),
-            containerWidth = $current.parent().width(),
-            containerHeight = $current.parent().height(),
-            $next,
-            imageInfo;
-
-        this.imageIndex = (this.imageIndex + 1) % (this.images.length);
-        imageInfo = this.images[this.imageIndex];
-        $next = this.$nextImage(imageInfo, $current, containerWidth, containerHeight);
+        var $current = $(this.selector).eq(0), 
+            $next = this.$nextImage(this.images[this.nextIndex()], 
+                                    $current, 
+                                    $current.parent().width(), 
+                                    $current.parent().height());
 
         $next.css({position: 'absolute', left: '100%'})
-             .insertAfter($current)
-             .animate({left: '0%'}, 1000);
+             .insertAfter($current);
+
+        this.animate($current, $next, function() {
+          $current.remove();
+        });
+
+      },
+
+      nextIndex: function() {
+        return this.imageIndex = (this.imageIndex + 1) % this.images.length;
+      },
+
+      animate: function($current, $next, complete) {
+        var self = this;
+
+        $next.animate({left: '0%'}, this.duration);
 
         $current.css('left', '0%').animate({left: '-100%'}, {
-          duration: 1000,
+          duration: this.duration,
           progress: function() {
             self.synchronizeVScroll($current, $next);
           },
           complete: function() {
             self.synchronizeVScroll($current, $next);
             $next.css({position: 'relative', left: 0});
-            $current.remove();
+            if (complete) { complete() };
           }
         });
-
       },
 
       synchronizeVScroll: function($master, $slave) {
