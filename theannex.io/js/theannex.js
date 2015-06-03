@@ -4,7 +4,7 @@ window.TheAnnex = window.TheAnnex || {};
 ////////////////////////////////////////
   
 TheAnnex.IntranetDetector = function(opts) {
-  
+
   var $img = jQuery('<img>', {
         src: "http://ping.johnmcneilstudio.private/pixel.png",
         style: "position: absolute"
@@ -39,7 +39,7 @@ TheAnnex.Carousel = (function($) {
         var self = this;
         setInterval(function() {
           self.advance();
-        })
+        }, this.interval);
       },
 
       advance: function() {
