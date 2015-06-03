@@ -3,21 +3,21 @@ window.TheAnnex = window.TheAnnex || {};
 
 ////////////////////////////////////////
   
+// test for presence of JMS intranet
 TheAnnex.IntranetDetector = function(opts) {
 
-  var $img = jQuery('<img>', {
-        src: "http://ping.johnmcneilstudio.private/pixel.png",
-        style: "position: absolute"
-      });
-
-  $img.one('load', function() {
-    $img.remove();
-    if (opts.connected) { 
-      opts.connected();
+  // attempt to load an IMG since it is possible to load an HTTP IMG inside an HTTPS site
+  jQuery('<img>', {
+    src: "http://ping.johnmcneilstudio.private/pixel.png", // internal-only URL
+    style: "position: absolute"
+  })
+  .one('load', function() {
+    $(this).remove();      // no longer needed: test is complete
+    if (opts.connected) {
+      opts.connected();    // callback on success
     }
-  });
-
-  $('body').append($img);
+  })
+  .append($img);
 
 };
 
