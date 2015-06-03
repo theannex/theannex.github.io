@@ -47,10 +47,7 @@ TheAnnex.Carousel = (function($) {
 
       advance: function() {
         var $current = $(this.selector).eq(0), 
-            $next = this.$nextImage(this.images[this.nextIndex()], 
-                                    $current, 
-                                    $current.parent().width(), 
-                                    $current.parent().height());
+            $next = this.$newImage(this.images[this.nextIndex()], $current);
 
         $next.css({position: 'absolute', left: '100%'})
              .insertAfter($current);
@@ -87,21 +84,22 @@ TheAnnex.Carousel = (function($) {
         $slave.css({transform: $master.css('transform')});
       },
 
-      $nextImage: function(imageInfo, $current, containerWidth, containerHeight) {
-        var $next = $current.clone();
-        $next.attr('src', this.imageURL(this.imageIndex, containerWidth))
-             .width(this.imageWidth(this.imageIndex, containerHeight));
+      $newImage: function(image, $current) {
+        var $next = $current.clone(),
+            containerWidth = $current.parent().width(),
+            containerHeight = $current.parent().height();
+        $next.attr('src', this.imageURL(image, containerWidth))
+             .width(this.imageWidth(image, containerHeight));
         return $next;
       },
 
-      imageURL: function(index, containerWidth) {
+      imageURL: function(image, containerWidth) {
         var query = (containerWidth >= 750) ? '?format=2500w' : '?format=1500w&storage=local';
-        return this.baseURL + this.images[index].path + this.images[index].file + query;
+        return this.baseURL + image.path + image.file + query;
       },
 
-      imageWidth: function(index, containerHeight) {
-        var image = this.images[index],
-            size = image.sizes['2500w'];
+      imageWidth: function(image, containerHeight) {
+        var size = image.sizes['2500w'];
         return containerHeight * size.width / size.height;
       }
 
