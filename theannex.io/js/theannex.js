@@ -54,8 +54,8 @@ TheAnnex.Carousel = (function($) {
 
         this.imageIndex = (this.imageIndex + 1) % (this.images.length);
         imageInfo = this.images[this.imageIndex];
-        $next = $nextImage(imageInfo, $current, containerWidth, containerHeight);
-        
+        $next = this.$nextImage(imageInfo, $current, containerWidth, containerHeight);
+
         $next.css({position: 'absolute', left: '100%'})
              .insertAfter($current)
              .animate({left: '0%'}, 1000);
