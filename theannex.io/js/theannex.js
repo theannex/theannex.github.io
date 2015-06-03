@@ -27,6 +27,7 @@ TheAnnex.Carousel = (function($) {
   
     var def = function(opts) {
       this.selector = opts.selector;
+      this.baseURL = opts.baseURL || '';
       this.images = opts.images;
       this.interval = opts.interval || 7000;
       this.imageIndex = 0;
@@ -67,7 +68,7 @@ TheAnnex.Carousel = (function($) {
 
       imageURL: function(index, width) {
         var query = (width >= 750) ? '?format=2500w' : '?format=1500w&storage=local';
-        return 'https://static1.squarespace.com/static/' + this.images[index].file + query;
+        return this.baseURL + this.images[index].path + this.images[index].file + query;
       },
 
       imageWidth: function(index, height) {
