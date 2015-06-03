@@ -72,7 +72,7 @@ TheAnnex.Carousel = (function($) {
 
       imageWidth: function(index, height) {
         var image = this.images[index],
-            size = image.size;
+            size = image.sizes['2500w'];
         return height * size.width / size.height;
       }
 
