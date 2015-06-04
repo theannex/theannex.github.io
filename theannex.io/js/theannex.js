@@ -48,7 +48,7 @@ TheAnnex.Carousel = (function($) {
       advance: function() {
         var $current = $(this.selector).eq(0), 
             $next = this.$newImage(this.images[this.nextIndex()], $current),
-            $transport = jQuery('<div />');
+            $transport = jQuery('<div/>');
 
         console.log($transport);
 
@@ -65,7 +65,8 @@ TheAnnex.Carousel = (function($) {
           left: '100%',
           overflow: 'hidden',
           backgroundColor: '#bbb',
-          border: '2px solid red'
+          border: '2px solid red',
+          html: $next
         });
         // $transport.append($next);
 
