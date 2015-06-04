@@ -59,7 +59,9 @@ TheAnnex.Carousel = (function($) {
           width: '100%',
           height: '100%',
           left: '100%',
-          overflow: 'hidden'
+          overflow: 'hidden',
+          backgroundColor: '#bbb',
+          border: '2px solid red'
         })
         .insertAfter($current)
         .append($next);
