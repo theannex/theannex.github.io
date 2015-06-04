@@ -50,7 +50,7 @@ TheAnnex.Carousel = (function($) {
             $current = $(this.selector).eq(0), 
             sizeTier = this.sizeTier(image, $current.parent().width()),
             naturalDims = image.sizes[sizeTier],
-            $next = this.$newImage(image, sizeTier),
+            $next = this.$newImage(image, $current, sizeTier),
             $transport = jQuery('<div/>');
 
         $transport.css({
@@ -105,8 +105,8 @@ TheAnnex.Carousel = (function($) {
         $slave.css({transform: $master.css('transform')});
       },
 
-      $newImage: function(image, containerWidth) {
-        var $next = $current.clone().attr('src', this.imageURL(image, containerWidth));
+      $newImage: function(image, $current, sizeTier) {
+        var $next = $current.clone().attr('src', this.imageURL(image, sizeTier));
         return $next;
       },
 
