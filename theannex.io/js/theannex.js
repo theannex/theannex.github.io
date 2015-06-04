@@ -65,9 +65,9 @@ TheAnnex.Carousel = (function($) {
           left: '100%',
           overflow: 'hidden',
           backgroundColor: '#bbb',
-          border: '2px solid red',
-          html: $next
+          border: '2px solid red'
         });
+        $next.appendTo($transport);
         // $transport.append($next);
 
         this.resizeAndPosition($next);
