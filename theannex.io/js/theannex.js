@@ -46,8 +46,11 @@ TheAnnex.Carousel = (function($) {
       },
 
       advance: function() {
-        var $current = $(this.selector).eq(0), 
-            $next = this.$newImage(this.images[this.nextIndex()], $current),
+        var image = this.images[this.nextIndex()],
+            $current = $(this.selector).eq(0), 
+            sizeTier = this.sizeTier(image, $current.parent().width()),
+            naturalDims = image.sizes[sizeTier],
+            $next = this.$newImage(image, sizeTier),
             $transport = jQuery('<div/>');
 
         $transport.css({
@@ -62,9 +65,13 @@ TheAnnex.Carousel = (function($) {
 
         $next.css({ position: 'relative' })
              .appendTo($transport);
-        this.resizeAndPosition($next);
+
+        $('window').on('resize.annexCarousel', function() {
+          this.imageCover($next, naturalDims);
+        }).resize();
 
         this.animate($current, $transport, function() {
+          $('window').off('resize.annexCarousel');
           $next.insertBefore($current);
           $transport.remove();
           $current.remove();
@@ -98,27 +105,22 @@ TheAnnex.Carousel = (function($) {
         $slave.css({transform: $master.css('transform')});
       },
 
-      $newImage: function(image, $current) {
-        var $next = $current.clone(),
-            containerWidth = $current.parent().width(),
-            containerHeight = $current.parent().height();
-        $next.attr('src', this.imageURL(image, containerWidth))
-             .width(this.imageWidth(image, containerHeight));
+      $newImage: function(image, containerWidth) {
+        var $next = $current.clone().attr('src', this.imageURL(image, containerWidth));
         return $next;
       },
 
-      resizeAndPosition: function($img) {
-
+      sizeTier: function(image, containerWidth) {
+        return (containerWidth < 750 && image['1500w']) ? '1500w' : '2500w';
       },
 
-      imageURL: function(image, containerWidth) {
-        var query = (containerWidth >= 750) ? '?format=2500w' : '?format=1500w&storage=local';
+      imageCover: function($img, naturalDims) {
+        $img.css({ width: naturalDims.width , height: naturalDims.height });
+      },
+
+      imageURL: function(image, sizeTier) {
+        var query = (sizeTier === '2500w') ? '?format=2500w' : '?format=1500w&storage=local';
         return this.baseURL + image.path + image.file + query;
-      },
-
-      imageWidth: function(image, containerHeight) {
-        var size = image.sizes['2500w'];
-        return containerHeight * size.width / size.height;
       }
 
     };
