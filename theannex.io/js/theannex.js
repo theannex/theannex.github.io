@@ -51,17 +51,14 @@ TheAnnex.Carousel = (function($) {
             $transport = jQuery('<div/>');
 
         $transport.css({
-          display: 'block',
-          position: 'absolute',
-          width: '100%',
-          height: '100%',
-          top: 0,
-          left: '100%',
-          overflow: 'hidden',
-          backgroundColor: '#bbb',
-          border: '2px solid red'
-        })
-        .insertAfter($current);
+                    position: 'absolute',
+                    width: '100%',
+                    height: '100%',
+                    top: 0,
+                    left: '100%',
+                    overflow: 'hidden'
+                  })
+                  .insertAfter($current);
 
         $next.css({ position: 'relative' })
              .appendTo($transport);
@@ -83,8 +80,6 @@ TheAnnex.Carousel = (function($) {
         var self = this,
             travellingOffset = $incoming.position().left - $outgoing.position().left;
 
-        // console.log($incoming.parent().html());
-
         $incoming.animate({left: '0%'}, {
           duration: this.duration,
           progress: function() {
@@ -97,17 +92,6 @@ TheAnnex.Carousel = (function($) {
           }
         });
 
-        // $outgoing.css('left', '0%').animate({left: '-100%'}, {
-        //   duration: this.duration,
-        //   progress: function() {
-        //     self.synchronizeVScroll($outgoing, $incoming);
-        //   },
-        //   complete: function() {
-        //     self.synchronizeVScroll($outgoing, $incoming);
-        //     $incoming.css({position: 'relative', left: 0});
-        //     if (complete) { complete() };
-        //   }
-        // });
       },
 
       synchronizeVScroll: function($master, $slave) {
