@@ -62,14 +62,14 @@ TheAnnex.Carousel = (function($) {
           position: 'absolute',
           width: '100%',
           height: '100%',
+          top: 0,
           left: '100%',
           overflow: 'hidden',
           backgroundColor: '#bbb',
           border: '2px solid red'
         });
-        $next.appendTo($transport);
-        // $transport.append($next);
 
+        $next.appendTo($transport);
         this.resizeAndPosition($next);
 
         this.animate($current, $transport, function() {
