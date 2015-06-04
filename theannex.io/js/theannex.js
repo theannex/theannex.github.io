@@ -50,7 +50,9 @@ TheAnnex.Carousel = (function($) {
             $next = this.$newImage(this.images[this.nextIndex()], $current),
             $transport = $('<div/>');
 
-        $next.css('position', 'absolute');
+        $next.css({ position: 'relative' });
+
+        // $next.css({ position: 'absolute', top: 0, left: 0 });
 
         $transport.css({
           position: 'absolute',
@@ -65,6 +67,7 @@ TheAnnex.Carousel = (function($) {
         this.resizeAndPosition($next);
 
         this.animate($current, $transport, function() {
+          // $next.css('position', 'relative');
           $next.insertBefore($current);
           $transport.remove();
           $current.remove();
@@ -84,11 +87,11 @@ TheAnnex.Carousel = (function($) {
         $outgoing.css('left', '0%').animate({left: '-100%'}, {
           duration: this.duration,
           progress: function() {
-            self.synchronizeVScroll($outgoing, $incoming);
+            // self.synchronizeVScroll($outgoing, $incoming);
           },
           complete: function() {
-            self.synchronizeVScroll($outgoing, $incoming);
-            $incoming.css({position: 'relative', left: 0});
+            // self.synchronizeVScroll($outgoing, $incoming);
+            // $incoming.css({position: 'relative', left: 0});
             if (complete) { complete() };
           }
         });
