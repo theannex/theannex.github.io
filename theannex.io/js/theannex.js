@@ -56,6 +56,7 @@ TheAnnex.Carousel = (function($) {
 
         // $next.css({ position: 'absolute', top: 0, left: 0 });
 
+        $transport.insertAfter($current);
         $transport.css({
           display: 'block',
           position: 'absolute',
@@ -65,9 +66,8 @@ TheAnnex.Carousel = (function($) {
           overflow: 'hidden',
           backgroundColor: '#bbb',
           border: '2px solid red'
-        })
-        .insertAfter($current)
-        .append($next);
+        });
+        $transport.append($next);
 
         this.resizeAndPosition($next);
 
