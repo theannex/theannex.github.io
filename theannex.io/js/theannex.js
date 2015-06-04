@@ -48,7 +48,7 @@ TheAnnex.Carousel = (function($) {
       advance: function() {
         var $current = $(this.selector).eq(0), 
             $next = this.$newImage(this.images[this.nextIndex()], $current),
-            $transport = $('<div />');
+            $transport = jQuery('<div />');
 
         console.log($transport);
 
