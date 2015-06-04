@@ -61,7 +61,7 @@ TheAnnex.Carousel = (function($) {
 
         this.resizeAndPosition($next);
 
-        this.animate($current, $container, function() {
+        this.animate($current, $transport, function() {
           $next.insertBefore($current);
           $transport.remove();
           $current.remove();
