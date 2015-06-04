@@ -85,7 +85,7 @@ TheAnnex.Carousel = (function($) {
       animate: function($outgoing, $incoming, complete) {
         var self = this;
 
-        console.log($incoming.html());
+        console.log($incoming.parent().html());
 
         $incoming.animate({left: '0%'}, {
           duration: this.duration,
