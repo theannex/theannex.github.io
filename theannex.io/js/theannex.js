@@ -56,7 +56,7 @@ TheAnnex.Carousel = (function($) {
           height: '100%',
           left: '100%'
         })
-        .add($next)
+        .append($next)
         .insertAfter($current);
 
         this.resizeAndPosition($next);
