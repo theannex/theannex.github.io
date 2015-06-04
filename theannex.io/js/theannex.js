@@ -50,14 +50,17 @@ TheAnnex.Carousel = (function($) {
             $next = this.$newImage(this.images[this.nextIndex()], $current),
             $transport = $('<div/>');
 
+        $next.css('position', 'absolute');
+
         $transport.css({
           position: 'absolute',
           width: '100%',
           height: '100%',
-          left: '100%'
+          left: '100%',
+          overflow: 'hidden'
         })
-        .append($next)
-        .insertAfter($current);
+        .insertAfter($current)
+        .append($next);
 
         this.resizeAndPosition($next);
 
