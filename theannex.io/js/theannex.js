@@ -85,19 +85,24 @@ TheAnnex.Carousel = (function($) {
       animate: function($outgoing, $incoming, complete) {
         var self = this;
 
-        $incoming.animate({left: '0%'}, this.duration);
+        console.log($incoming.html());
 
-        $outgoing.css('left', '0%').animate({left: '-100%'}, {
+        $incoming.animate({left: '0%'}, {
           duration: this.duration,
-          progress: function() {
-            // self.synchronizeVScroll($outgoing, $incoming);
-          },
-          complete: function() {
-            // self.synchronizeVScroll($outgoing, $incoming);
-            // $incoming.css({position: 'relative', left: 0});
-            if (complete) { complete() };
-          }
+          complete: complete
         });
+
+        // $outgoing.css('left', '0%').animate({left: '-100%'}, {
+        //   duration: this.duration,
+        //   progress: function() {
+        //     self.synchronizeVScroll($outgoing, $incoming);
+        //   },
+        //   complete: function() {
+        //     self.synchronizeVScroll($outgoing, $incoming);
+        //     $incoming.css({position: 'relative', left: 0});
+        //     if (complete) { complete() };
+        //   }
+        // });
       },
 
       synchronizeVScroll: function($master, $slave) {
