@@ -47,12 +47,23 @@ TheAnnex.Carousel = (function($) {
 
       advance: function() {
         var $current = $(this.selector).eq(0), 
-            $next = this.$newImage(this.images[this.nextIndex()], $current);
+            $next = this.$newImage(this.images[this.nextIndex()], $current),
+            $transport = $('<div/>');
 
-        $next.css({position: 'absolute', left: '100%'})
-             .insertAfter($current);
+        $transport.css({
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          left: '100%'
+        })
+        .add($next)
+        .insertAfter($current);
 
-        this.animate($current, $next, function() {
+        this.resizeAndPosition($next);
+
+        this.animate($current, $container, function() {
+          $next.insertBefore($current);
+          $transport.remove();
           $current.remove();
         });
 
@@ -62,19 +73,19 @@ TheAnnex.Carousel = (function($) {
         return this.imageIndex = (this.imageIndex + 1) % this.images.length;
       },
 
-      animate: function($current, $next, complete) {
+      animate: function($outgoing, $incoming, complete) {
         var self = this;
 
-        $next.animate({left: '0%'}, this.duration);
+        $incoming.animate({left: '0%'}, this.duration);
 
-        $current.css('left', '0%').animate({left: '-100%'}, {
+        $outgoing.css('left', '0%').animate({left: '-100%'}, {
           duration: this.duration,
           progress: function() {
-            self.synchronizeVScroll($current, $next);
+            self.synchronizeVScroll($outgoing, $incoming);
           },
           complete: function() {
-            self.synchronizeVScroll($current, $next);
-            $next.css({position: 'relative', left: 0});
+            self.synchronizeVScroll($outgoing, $incoming);
+            $incoming.css({position: 'relative', left: 0});
             if (complete) { complete() };
           }
         });
@@ -91,6 +102,10 @@ TheAnnex.Carousel = (function($) {
         $next.attr('src', this.imageURL(image, containerWidth))
              .width(this.imageWidth(image, containerHeight));
         return $next;
+      },
+
+      resizeAndPosition: function($img) {
+
       },
 
       imageURL: function(image, containerWidth) {
