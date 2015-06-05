@@ -40,8 +40,7 @@ TheAnnex.Carousel = (function($) {
 
       init: function() {
         var self = this;
-        setTimeout(function() {
-        // setInterval(function() {
+        setInterval(function() {
           self.advance();
         }, this.interval);
       },
