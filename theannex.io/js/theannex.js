@@ -85,7 +85,7 @@ TheAnnex.Carousel = (function($) {
             $transport.remove();
             $current.remove();
           }
-        }_
+        });
       },
 
       nextIndex: function() {
