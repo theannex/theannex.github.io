@@ -90,16 +90,17 @@ TheAnnex.Carousel = (function($) {
 
       animate: function($outgoing, $incoming, complete) {
         var self = this,
-            travellingOffset = $incoming.position().left - $outgoing.position().left;
+            travellingOffset = $incoming.position().left - $outgoing.position().left,
+            $img = $incoming.children().eq(0);
 
         $incoming.animate({left: '0%'}, {
           duration: this.duration,
           progress: function() {
             $outgoing.css('left', $incoming.position().left - travellingOffset);
-            self.synchronizeVScroll($outgoing, $incoming);
+            self.synchronizeVScroll($outgoing, $img);
           },
           complete: function() {
-            self.synchronizeVScroll($outgoing, $incoming);
+            self.synchronizeVScroll($outgoing, $img);
             if (complete) { complete() };
           }
         });
