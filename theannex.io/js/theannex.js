@@ -40,7 +40,8 @@ TheAnnex.Carousel = (function($) {
 
       init: function() {
         var self = this;
-        setInterval(function() {
+        setTimeout(function() {
+        // setInterval(function() {
           self.advance();
         }, this.interval);
       },
@@ -115,7 +116,7 @@ TheAnnex.Carousel = (function($) {
       },
 
       imageCover: function($img, naturalDims) {
-        $img.css({ width: naturalDims.width , height: naturalDims.height });
+        $img.css({ width: naturalDims.width, height: naturalDims.height });
       },
 
       imageURL: function(image, sizeTier) {
