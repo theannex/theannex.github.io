@@ -148,7 +148,7 @@ console.log(containerWidth, containerHeight, newImageWidth, newImageHeight, focu
           left   : (containerWidth - newImageWidth) * focus[0]
         });
 
-console.log($img.css());
+console.log($img.attr('style'));
       },
 
       imageSizeQuery: function(sizeTier) {
