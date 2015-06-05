@@ -75,34 +75,33 @@ TheAnnex.Carousel = (function($) {
           self.imageCover($next, naturalDims, image.focus);
         });
 
-        this.animate($current, $transport, function() {
-          $('window').off('resize.annexCarousel');
-          $next.insertBefore($current);
-          $transport.remove();
-          $current.remove();
-        });
-
+        this.animate($current, $transport, {
+          progress: function() {
+            self.synchronizeVScroll($current, $next);
+          },
+          complete: function() {
+            $('window').off('resize.annexCarousel');
+            $next.insertBefore($current);
+            $transport.remove();
+            $current.remove();
+          }
+        }_
       },
 
       nextIndex: function() {
         return this.imageIndex = (this.imageIndex + 1) % this.images.length;
       },
 
-      animate: function($outgoing, $incoming, complete) {
-        var self = this,
-            travellingOffset = $incoming.position().left - $outgoing.position().left,
-            $img = $incoming.children().eq(0);
+      animate: function($outgoing, $incoming, opts) {
+        var travellingOffset = $incoming.position().left - $outgoing.position().left;
 
         $incoming.animate({left: '0%'}, {
           duration: this.duration,
           progress: function() {
+            if (opts.progress) { opts.progress() }
             $outgoing.css('left', $incoming.position().left - travellingOffset);
-            self.synchronizeVScroll($outgoing, $img);
           },
-          complete: function() {
-            self.synchronizeVScroll($outgoing, $img);
-            if (complete) { complete() };
-          }
+          complete: opts.complete
         });
 
       },
