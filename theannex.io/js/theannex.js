@@ -50,7 +50,7 @@ TheAnnex.Carousel = (function($) {
         var self = this,
             image = this.images[this.nextIndex()],
             $current = $(this.selector).eq(0), 
-            sizeTier = this.sizeTier(image, $current.parent().width()),
+            sizeTier = this.sizeTier(image.sizes, $current.parent().width()),
             naturalDims = image.sizes[sizeTier],
             $next = this.$newImage(image, $current, sizeTier),
             $transport = jQuery('<div/>');
@@ -111,12 +111,20 @@ TheAnnex.Carousel = (function($) {
       },
 
       $newImage: function(image, $current, sizeTier) {
-        var $next = $current.clone().attr('src', this.imageURL(image, sizeTier));
-        return $next;
+        var imagePath = this.baseURL + image.path + image.file;
+        return $current.clone().attr({
+          'src'                    : imagePath + '?' + this.imageSizeQuery(sizeTier),
+          'alt'                    : image.file,
+          'data-src'               : imagePath,
+          'data-image'             : imagePath,
+          'data-image-dimensions'  : image.sizes[sizeTier].join('x'),
+          'data-image-focal-point' : (image.focus || [0.5, 0.5]).join(','),
+          'data-image-resolution'  : sizeTier
+        });
       },
 
-      sizeTier: function(image, containerWidth) {
-        return (containerWidth < 750 && image['1500w']) ? '1500w' : '2500w';
+      sizeTier: function(sizes, containerWidth) {
+        return (containerWidth < 750 && sizes['1500w']) ? '1500w' : '2500w';
       },
 
       imageCover: function($img, naturalDims) {
@@ -124,9 +132,8 @@ TheAnnex.Carousel = (function($) {
             .height(naturalDims[1]);
       },
 
-      imageURL: function(image, sizeTier) {
-        var query = (sizeTier === '2500w') ? '?format=2500w' : '?format=1500w&storage=local';
-        return this.baseURL + image.path + image.file + query;
+      imageSizeQuery: function(sizeTier) {
+        return (sizeTier === '2500w') ? 'format=2500w' : 'format=1500w&storage=local';
       }
 
     };
