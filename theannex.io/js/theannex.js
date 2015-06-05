@@ -120,7 +120,8 @@ TheAnnex.Carousel = (function($) {
       },
 
       imageCover: function($img, naturalDims) {
-        $img.css({ width: naturalDims[0], height: naturalDims[1] });
+        $img.width(naturalDims[0])
+            .height(naturalDims[1]);
       },
 
       imageURL: function(image, sizeTier) {
