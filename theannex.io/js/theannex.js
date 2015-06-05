@@ -40,14 +40,27 @@ TheAnnex.Carousel = (function($) {
 
       init: function() {
         var self = this;
+        this.preload(this.nextIndex());
         setInterval(function() {
-          self.advance();
+          this.imageIndex = this.nextIndex();
+          self.advance(this.imageIndex);
         }, this.interval);
       },
 
-      advance: function() {
+      preload: function(index, sizeTier) {
+        var image = this.images[index],
+            sizeTier = this.sizeTier(image.sizes, $(this.selector).eq(0).parent().width());
+        jQuery('<img>', {
+          src: this.imagePath(image) + '?' + this.imageSizeQuery(sizeTier),
+          style: "position: absolute, top: 1000%, opacity: 0"
+        })
+        .appendTo('body') // kick it off
+        .one('load', function() { $(this).remove(); });
+      },
+
+      advance: function(toIndex) {
         var self = this,
-            image = this.images[this.nextIndex()],
+            image = this.images[toIndex],
             $current = $(this.selector).eq(0), 
             sizeTier = this.sizeTier(image.sizes, $current.parent().width()),
             naturalDims = image.sizes[sizeTier],
@@ -88,7 +101,7 @@ TheAnnex.Carousel = (function($) {
       },
 
       nextIndex: function() {
-        return this.imageIndex = (this.imageIndex + 1) % this.images.length;
+        return (this.imageIndex + 1) % this.images.length;
       },
 
       animate: function($outgoing, $incoming, opts) {
@@ -110,7 +123,7 @@ TheAnnex.Carousel = (function($) {
       },
 
       $newImage: function(image, $current, sizeTier) {
-        var imagePath = this.baseURL + image.path + image.file;
+        var imagePath = this.imagePath(image);
         return $current.clone().attr({
           'src'                    : imagePath + '?' + this.imageSizeQuery(sizeTier),
           'alt'                    : image.file,
@@ -120,6 +133,10 @@ TheAnnex.Carousel = (function($) {
           'data-image-focal-point' : (image.focus || [0.5, 0.5]).join(','),
           'data-image-resolution'  : sizeTier
         });
+      },
+
+      imagePath: function(image) {
+        return this.baseURL + image.path + image.file;
       },
 
       sizeTier: function(sizes, containerWidth) {
