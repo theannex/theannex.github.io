@@ -47,7 +47,8 @@ TheAnnex.Carousel = (function($) {
       },
 
       advance: function() {
-        var image = this.images[this.nextIndex()],
+        var self = this,
+            image = this.images[this.nextIndex()],
             $current = $(this.selector).eq(0), 
             sizeTier = this.sizeTier(image, $current.parent().width()),
             naturalDims = image.sizes[sizeTier],
@@ -68,7 +69,7 @@ TheAnnex.Carousel = (function($) {
              .appendTo($transport);
 
         $('window').on('resize.annexCarousel', function() {
-          this.imageCover($next, naturalDims);
+          self.imageCover($next, naturalDims);
         }).resize();
 
         this.animate($current, $transport, function() {
@@ -116,6 +117,7 @@ TheAnnex.Carousel = (function($) {
       },
 
       imageCover: function($img, naturalDims) {
+console.log($img, naturalDims);
         $img.css({ width: naturalDims.width, height: naturalDims.height });
       },
 
