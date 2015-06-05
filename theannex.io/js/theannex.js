@@ -69,10 +69,10 @@ TheAnnex.Carousel = (function($) {
              .appendTo($transport);
 
         // size image to cover container
-        this.imageCover($next, naturalDims);
+        this.imageCover($next, naturalDims, image.focus);
         // ... and listen for window resize during animation
         $('window').on('resize.annexCarousel', function() {
-          self.imageCover($next, naturalDims);
+          self.imageCover($next, naturalDims, image.focus);
         });
 
         this.animate($current, $transport, function() {
@@ -127,9 +127,23 @@ TheAnnex.Carousel = (function($) {
         return (containerWidth < 750 && sizes['1500w']) ? '1500w' : '2500w';
       },
 
-      imageCover: function($img, naturalDims) {
-        $img.width(naturalDims[0])
-            .height(naturalDims[1]);
+      imageCover: function($img, naturalDims, focus) {
+        var containerWidth = $img.parent().width(),
+            containerHeight = $img.parent().height(),
+            newImageWidth = containerWidth, // try equal width to container
+            newImageHeight = containerHeight * naturalDims[1] / naturalDims[0],
+            focus = focus || [0.5, 0.5];
+
+        if (newImageHeight < containerHeight) { // does not cover so match height instead
+          newImageWidth = containerWidth * naturalDims[0] / naturalDims[1];
+        }
+
+        $img.css({
+          width  : naturalDims[0],
+          height : naturalDims[1],
+          top    : (containerHeight - newImageHeight) * focus[1],
+          left   : (containerWidth - newImageWidth) * focus[0]
+        });
       },
 
       imageSizeQuery: function(sizeTier) {
