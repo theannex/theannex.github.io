@@ -68,9 +68,12 @@ TheAnnex.Carousel = (function($) {
         $next.css({ position: 'relative' })
              .appendTo($transport);
 
+        // size image to cover container
+        this.imageCover($next, naturalDims);
+        // ... and listen for window resize during animation
         $('window').on('resize.annexCarousel', function() {
           self.imageCover($next, naturalDims);
-        }).resize();
+        });
 
         this.animate($current, $transport, function() {
           $('window').off('resize.annexCarousel');
