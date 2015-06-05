@@ -42,8 +42,8 @@ TheAnnex.Carousel = (function($) {
         var self = this;
         this.preload(this.nextIndex());
         setInterval(function() {
-          this.imageIndex = this.nextIndex();
-          self.advance(this.imageIndex);
+          self.imageIndex = self.nextIndex();
+          self.advance(self.imageIndex);
         }, this.interval);
       },
 
