@@ -136,14 +136,19 @@ TheAnnex.Carousel = (function($) {
 
         if (newImageHeight < containerHeight) { // does not cover so match height instead
           newImageWidth = containerWidth * naturalDims[0] / naturalDims[1];
+          newImageHeight = containerHeight;
         }
 
+console.log(containerWidth, containerHeight, newImageWidth, newImageHeight, focus);
+
         $img.css({
-          width  : naturalDims[0],
-          height : naturalDims[1],
+          width  : newImageWidth,
+          height : newImageHeight,
           top    : (containerHeight - newImageHeight) * focus[1],
           left   : (containerWidth - newImageWidth) * focus[0]
         });
+
+console.log($img.css());
       },
 
       imageSizeQuery: function(sizeTier) {
