@@ -87,7 +87,7 @@ TheAnnex.Carousel = (function($) {
           self.imageCover($next, naturalDims, image.focus);
         });
 
-        this.animate($current, $transport, {
+        this.crossfade($current, $transport, {
           progress: function() {
             self.synchronizeVScroll($current, $next);
           },
@@ -96,6 +96,7 @@ TheAnnex.Carousel = (function($) {
             $next.insertBefore($current);
             $transport.remove();
             $current.remove();
+            self.preload(self.nextIndex());
           }
         });
       },
@@ -104,7 +105,7 @@ TheAnnex.Carousel = (function($) {
         return (this.imageIndex + 1) % this.images.length;
       },
 
-      animate: function($outgoing, $incoming, opts) {
+      slideLeft: function($outgoing, $incoming, opts) {
         var travellingOffset = $incoming.position().left - $outgoing.position().left;
 
         $incoming.animate({left: '0%'}, {
@@ -116,6 +117,20 @@ TheAnnex.Carousel = (function($) {
           complete: opts.complete
         });
 
+      },
+
+      crossfade: function(_, $incoming, opts) {
+        $incoming.css({
+                   top: 0,
+                   left: 0,
+                   opacity: 0,
+                   overflow: 'visible'
+                 })
+                 .animate({opacity: 1}, {
+                   duration: this.duration,
+                   progress: opts.progress,
+                   complete: opts.complete
+                 });
       },
 
       synchronizeVScroll: function($master, $slave) {
